@@ -13,8 +13,30 @@ class PerfilViewModel : ViewModel() {
     )
 
     val servicios = listOf(
-        Servicio(tipo = "Alojamiento", descripcion = "Habitación en casa familiar", esGratuito = false),
-        Servicio(tipo = "Comida", descripcion = "Desayuno típico local", esGratuito = true),
-        Servicio(tipo = "Tour", descripcion = "Paseo por la ciudad", esGratuito = true)
+        Servicio(
+            tipo = "Alojamiento",
+            descripcion = "Habitación en casa familiar",
+            esGratuito = true,
+            nombre = "Casa de John",
+            costo = 0.0
+        ),
+        Servicio(
+            tipo = "Comida",
+            descripcion = "Desayuno típico local",
+            esGratuito = true,
+            nombre = "Desayuno de John",
+            costo = 0.0
+        ),
+        Servicio(
+            tipo = "Tour",
+            descripcion = "Paseo por la ciudad",
+            esGratuito = true,
+            nombre = "Tour de la ciudad",
+            costo = 0.0
+        )
     )
+    // Método para obtener los servicios
+    fun obtenerServicios(): List<Servicio> {
+        return servicios
+    }
 }
