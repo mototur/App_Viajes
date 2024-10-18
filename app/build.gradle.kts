@@ -53,7 +53,7 @@ dependencies {
     val nav_version = "2.8.0"
 
     // Jetpack Compose Integration
-    implementation ("androidx.navigation:navigation-compose:$nav_version")
+    implementation("androidx.navigation:navigation-compose:$nav_version")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -62,7 +62,13 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
+
+    // Material 3
+    implementation("androidx.compose.material3:material3:1.1.0") // Agregada
+    // Material Icons
+    implementation("androidx.compose.material:material-icons-extended:1.0.5") // Agregada
+
+    implementation(libs.androidx.material3) // Esto ya lo tienes, se puede mantener
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
