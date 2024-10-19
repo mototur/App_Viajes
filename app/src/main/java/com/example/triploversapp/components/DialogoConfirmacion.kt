@@ -23,8 +23,8 @@ fun DialogoConfirmacion(
 ) {
     Card(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "Solicitud de reserva de: ${reserva.usuario.nombre}")
-            Text(text = "Servicio: ${reserva.servicio.nombre}")
+            Text(text = "Solicitud de reserva de: ${reserva.usuario.name}")
+            Text(text = "Servicio: ${reserva.servicio.id}")
             Spacer(modifier = Modifier.height(8.dp))
             Row {
                 Button (onClick = { onAceptarClick(reserva) }, modifier = Modifier.weight(1f)) {

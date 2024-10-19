@@ -11,20 +11,167 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.triploversapp.model.Servicio
+import com.example.triploversapp.model.Service
+
 
 @Composable
-fun TarjetaServicio(servicio: Servicio, onReservarClick: (Servicio) -> Unit) {
+fun TarjetaServicio(servicio: Service, onReservarClick: (Service) -> Unit) {
     Card(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = servicio.nombre, style = MaterialTheme.typography.titleLarge)
-            Text(text = servicio.descripcion)
+            Text(text = servicio.id, style = MaterialTheme.typography.titleLarge)
+            Text(text = servicio.description)
             Spacer(modifier = Modifier.height(8.dp))
             Button(onClick = { onReservarClick(servicio) }) {
                 Text("Reservar")
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

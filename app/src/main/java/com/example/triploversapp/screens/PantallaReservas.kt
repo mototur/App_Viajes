@@ -1,6 +1,10 @@
 package com.example.triploversapp.screens
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -11,15 +15,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.triploversapp.components.TarjetaServicio
-import com.example.triploversapp.model.Servicio
-import com.example.triploversapp.viewmodel.PerfilViewModel
+import com.example.triploversapp.model.Service
+import com.example.triploversapp.viewmodel.ServiceViewModel
 
 @Composable
 fun PantallaReservas(
-    perfilViewModel: PerfilViewModel = viewModel(), // Usamos el ViewModel para obtener los servicios
-    onReservarClick: (Servicio) -> Unit
+    serviceViewModel: ServiceViewModel = viewModel(), // Usamos el ViewModel para obtener los servicios
+    onReservarClick: (Service) -> Unit
 ) {
-    val servicios = perfilViewModel.obtenerServicios() // Obtenemos los servicios desde el ViewModel
+    val servicios:List<Service> = serviceViewModel.services.value // Obtenemos los servicios desde el ViewModel
 
     Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
         Text(text = "Reservas", style = MaterialTheme.typography.titleLarge)

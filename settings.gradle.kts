@@ -7,8 +7,16 @@ pluginManagement {
                 includeGroupByRegex("androidx.*")
             }
         }
+        resolutionStrategy {
+            eachPlugin {
+                if( requested.id.id == "dagger.hilt.android.plugin") {
+                    useModule("com.google.dagger:hilt-android-gradle-plugin:2.39.1")
+                }
+            }
+        }
         mavenCentral()
         gradlePluginPortal()
+
     }
 }
 dependencyResolutionManagement {
@@ -18,6 +26,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 
 rootProject.name = "TripLoversApp"
 include(":app")

@@ -1,8 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id ('dagger.hilt.android.plugin' )// Plugin de Hilt
+
+    id ("kotlin-kapt")
+    id ("dagger.hilt.android.plugin")
 }
+
 
 android {
     namespace = "com.example.triploversapp"
@@ -51,7 +54,9 @@ android {
 }
 
 dependencies {
+    val roon_version = "2.5.1"
     val nav_version = "2.8.0"
+    val dagger_version = "2.46.1"
 
     // Jetpack Compose Integration
     implementation ("androidx.navigation:navigation-compose:$nav_version")
@@ -71,7 +76,101 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation ("com.google.dagger:hilt-android:2.48")
-    kapt ("com.google.dagger:hilt-compiler:2.48")
+
+    implementation ("com.google.dagger:hilt-android:2.44")
+    kapt ("com.google.dagger:hilt-android-compiler:2.44")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
