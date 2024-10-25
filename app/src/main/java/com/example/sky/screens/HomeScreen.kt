@@ -25,6 +25,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import coil3.compose.rememberAsyncImagePainter
+import com.example.sky.model.user.UserAuthService
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun HomeScreen(uid: String, navController: NavHostController) {

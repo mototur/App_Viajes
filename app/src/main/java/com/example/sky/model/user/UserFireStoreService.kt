@@ -18,4 +18,24 @@ class UserFireStoreService(private val fireStoreInstance: FirebaseFirestore) {
                 onResult(false, e.localizedMessage)
             }
     }
+
+    fun getUser(uid: String, callback: (Usuario?, String?) -> Unit) {
+        fireStoreInstance.collection("users").document(uid).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    try {
+                        val user = document.toObject(Usuario::class.java)
+                        callback(user, null)
+                    } catch (e: Exception) {
+                        callback(null, "Error al convertir el documento a Usuario: ${e.message}")
+                    }
+                } else {
+                    callback(null, "Usuario no encontrado")
+                }
+            }
+            .addOnFailureListener { exception ->
+                callback(null, exception.message)
+            }
+    }
 }
+
