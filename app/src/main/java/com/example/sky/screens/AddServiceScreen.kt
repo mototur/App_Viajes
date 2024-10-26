@@ -50,7 +50,7 @@ fun AddServiceScreen(uid: String, navController: NavHostController, onServiceAdd
     val servicioStorage = ServicioStorageAndStore()
 
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController, uid) }
+        bottomBar = { BottomNavigation(navController, uid) }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -167,6 +167,7 @@ fun AddServiceScreen(uid: String, navController: NavHostController, onServiceAdd
                             fechaFin = fechaFin,
                             costo = costo.toDoubleOrNull(),
                             gratuito = gratuito
+
                         )
 
 

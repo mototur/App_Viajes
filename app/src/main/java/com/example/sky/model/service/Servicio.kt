@@ -15,5 +15,6 @@ data class Servicio(
     var gratuito: Boolean = false,
     var estado: String = "disponible", // disponible, reservado, no disponible
     var reservas: List<Reserva> = emptyList()
+
 )
 

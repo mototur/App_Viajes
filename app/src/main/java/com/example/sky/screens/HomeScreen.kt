@@ -3,30 +3,28 @@ package com.example.sky.screens
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material3.*
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Business
 import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.*
-import androidx.navigation.NavHostController
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import coil3.compose.rememberAsyncImagePainter
 import com.example.sky.model.service.Servicio
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import coil3.compose.rememberAsyncImagePainter
-import com.example.sky.model.user.UserAuthService
-import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun HomeScreen(uid: String, navController: NavHostController) {
@@ -34,9 +32,12 @@ fun HomeScreen(uid: String, navController: NavHostController) {
     var loading by remember { mutableStateOf(true) }
     var errorMessage by remember { mutableStateOf("") }
 
+    var selectedService by remember { mutableStateOf<Servicio?>(null) }
+    var isDialogOpen by remember { mutableStateOf(false) }
+
     // Cargar servicios desde Firestore
     LaunchedEffect(Unit) {
-        val db: FirebaseFirestore = Firebase.firestore
+        val db = Firebase.firestore
         db.collection("servicios")
             .get()
             .addOnSuccessListener { documents ->
@@ -48,13 +49,13 @@ fun HomeScreen(uid: String, navController: NavHostController) {
                 loading = false
             }
             .addOnFailureListener { exception ->
-                errorMessage = "Error al cargar los servicios: ${exception.message}"
+                errorMessage = "Error loading services: ${exception.message}"
                 loading = false
             }
     }
 
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController, uid) }
+        bottomBar = { BottomNavigation(navController, uid) }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -62,7 +63,6 @@ fun HomeScreen(uid: String, navController: NavHostController) {
                 .padding(paddingValues)
                 .background(Color(0xFFE3F2FD))
         ) {
-            // Título de la pantalla
             Text(
                 text = "Servicios Disponibles",
                 fontSize = 24.sp,
@@ -77,65 +77,33 @@ fun HomeScreen(uid: String, navController: NavHostController) {
             } else if (errorMessage.isNotEmpty()) {
                 Text(text = errorMessage, color = Color.Red, modifier = Modifier.padding(16.dp))
             } else {
-                // LazyColumn para cargar servicios
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(services.size) { index ->
                         val servicio = services[index]
-                        ServiceCard(servicio)
+                        ServiceCard(servicio) {
+                            selectedService = servicio
+                            isDialogOpen = true
+                        }
                     }
                 }
+            }
+        }
+    }
+
+    selectedService?.let { service ->
+        if (isDialogOpen) {
+            ServiceDetailsDialog(service) {
+                isDialogOpen = false
             }
         }
     }
 }
 
 @Composable
-fun ServiceCard(servicio: Servicio) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        elevation = CardDefaults.cardElevation(4.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            // Mostrar imagen del servicio
-            Image(
-                painter = rememberAsyncImagePainter(servicio.urlServicio),
-                contentDescription = "Imagen del Servicio",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp) // Ajusta la altura según tus necesidades
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = servicio.tipo, // O cualquier otro campo que identifique el servicio
-                fontSize = 20.sp,
-                color = Color(0xFF1976D2)
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = servicio.descripcion,
-                fontSize = 14.sp
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "Estado: ${servicio.estado}", // Asegúrate de que `estado` exista en tu modelo
-                fontSize = 14.sp,
-                color = Color.Gray
-            )
-        }
-    }
-}
-
-@Composable
-fun BottomNavigationBar(navController: NavHostController, uid: String) {
+fun BottomNavigation(navController: NavHostController, uid: String) {
     BottomNavigation(
         backgroundColor = Color(0xFF1976D2),
         contentColor = Color.White
@@ -167,4 +135,73 @@ fun BottomNavigationBar(navController: NavHostController, uid: String) {
             onClick = { navController.navigate("chat/$uid") }
         )
     }
+}
+
+@Composable
+fun ServiceCard(servicio: Servicio, onClick: () -> Unit) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .clickable { onClick() },
+        elevation = 4.dp
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Image(
+                painter = rememberAsyncImagePainter(servicio.urlServicio),
+                contentDescription = "Imagen del Servicio",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = servicio.tipo,
+                fontSize = 20.sp,
+                color = Color(0xFF1976D2)
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = servicio.descripcion,
+                fontSize = 14.sp
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Estado: ${servicio.estado}",
+                fontSize = 14.sp,
+                color = Color.Gray
+            )
+        }
+    }
+}
+
+@Composable
+fun ServiceDetailsDialog(servicio: Servicio, onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = { onDismiss() },
+        title = {
+            Text(text = "Detalles del Servicio", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        },
+        text = {
+            Column {
+                Text(text = "Tipo: ${servicio.tipo}", fontSize = 16.sp)
+                Text(text = "Descripción: ${servicio.descripcion}", fontSize = 16.sp)
+                Text(text = "Ubicación: ${servicio.ubicacion}", fontSize = 16.sp)
+                Text(text = "Fecha de Inicio: ${servicio.fechaInicio}", fontSize = 16.sp)
+                Text(text = "Fecha de Fin: ${servicio.fechaFin}", fontSize = 16.sp)
+                Text(text = "Costo: ${servicio.costo ?: "N/A"}", fontSize = 16.sp)
+                Text(text = "Gratuito: ${if (servicio.gratuito) "Sí" else "No"}", fontSize = 16.sp)
+                Text(text = "Estado: ${servicio.estado}", fontSize = 16.sp)
+            }
+        },
+        confirmButton = {
+            Button(onClick = { onDismiss() }) {
+                Text("Cerrar")
+            }
+        }
+    )
 }
