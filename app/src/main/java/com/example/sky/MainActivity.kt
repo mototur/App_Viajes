@@ -29,6 +29,7 @@ import com.example.sky.screens.HomeScreen
 import com.example.sky.screens.Login
 import com.example.sky.screens.ProfileScreen
 import com.example.sky.screens.RegisterScreen
+import com.example.sky.screens.TravelTipsScreen
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : ComponentActivity() {
@@ -59,7 +60,10 @@ fun MyApp() {
         composable("blank") {
             BlankScreen(navController)
         }
-
+        composable("travel_tips/{uid}") { backStackEntry ->
+            val uid = backStackEntry.arguments?.getString("uid") ?: return@composable
+            TravelTipsScreen(uid, navController)
+        }
         composable("profile/{userID}") { backStackEntry ->
             val userId = backStackEntry.arguments?.getString("userID")
             if (userId != null) {
@@ -81,7 +85,3 @@ fun MyApp() {
         }
     }
 }
-
-
-
-

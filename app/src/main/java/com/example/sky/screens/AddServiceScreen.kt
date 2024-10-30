@@ -7,6 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.BottomNavigation
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -50,7 +51,8 @@ fun AddServiceScreen(uid: String, navController: NavHostController, onServiceAdd
     val servicioStorage = ServicioStorageAndStore()
 
     Scaffold(
-        bottomBar = { BottomNavigation(navController, uid) }
+        bottomBar = { BottomNavigationBar(navController, uid) }
+
     ) { paddingValues ->
         Column(
             modifier = Modifier
