@@ -136,6 +136,7 @@ fun HomeScreen(uid: String, navController: NavHostController) {
                 .fillMaxSize()
                 .padding(paddingValues)
                 .background(Color(0xFFFFFFFF))
+
         ) {
             if (loading) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))

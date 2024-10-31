@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.sky.model.user.UserAuthService
 import com.example.sky.screens.AddServiceScreen
 import com.example.sky.screens.BlankScreen
+import com.example.sky.screens.ChatScreen
 import com.example.sky.screens.HomeScreen
 import com.example.sky.screens.Login
 import com.example.sky.screens.ProfileScreen
@@ -72,5 +73,12 @@ fun MyApp() {
                 })
             }
         }
+        composable("chat/{userID}") { backStackEntry ->
+            val userID = backStackEntry.arguments?.getString("userID")
+            if (userID != null) {
+                ChatScreen(uid = userID, navController = navController)
+            }
+        }
     }
 }
+
