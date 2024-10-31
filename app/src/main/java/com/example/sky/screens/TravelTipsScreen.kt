@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -61,8 +62,8 @@ fun TravelTipsScreen(uid: String, navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Recomendaciones y Consejos de Viaje", fontSize = 25.sp, textAlign = TextAlign.Center) },
-                colors = TopAppBarDefaults.topAppBarColors(Color(0xFF1976D2)),
+                title = { Text("Recomendaciones y Consejos de Viaje", fontSize = 25.sp, textAlign = TextAlign.Center, color = Color.White ) },
+                colors = TopAppBarDefaults.topAppBarColors(Color(0xFF000080)),
             )
         },
         bottomBar = { BottomNavigationBar(navController = navController, uid = uid, userName = currentUser?.nombre ?: "Usuario") }
@@ -72,7 +73,7 @@ fun TravelTipsScreen(uid: String, navController: NavHostController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .background(Color(0xFFE3F2FD)),
+                .background(Color(0xFFFFFFFF)),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -90,8 +91,10 @@ fun TravelTipsScreen(uid: String, navController: NavHostController) {
                 "Consejos para viajar económicamente",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF1976D2),
-                modifier = Modifier.padding(10.dp) // Añadir separación
+                color = Color(0xFF000000),
+                modifier = Modifier
+                    .padding(10.dp) // Añadir separación
+                    .fillMaxWidth()
             )
             OutlinedTextField(
                 value = economicTip,
@@ -107,8 +110,10 @@ fun TravelTipsScreen(uid: String, navController: NavHostController) {
                 "Consejos para viajar de manera segura",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF1976D2),
-                modifier = Modifier.padding(10.dp) // Añadir separación
+                color = Color(0xFF000000),
+                modifier = Modifier
+                    .padding(10.dp) // Añadir separación
+                    .fillMaxWidth()
             )
             OutlinedTextField(
                 value = safetyTip,
@@ -124,8 +129,10 @@ fun TravelTipsScreen(uid: String, navController: NavHostController) {
                 "Consejos para disfrutar mejor de los destinos",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF1976D2),
-                modifier = Modifier.padding(10.dp) // Añadir separación
+                color = Color(0xFF000000),
+                modifier = Modifier
+                    .padding(10.dp) // Añadir separación
+                    .fillMaxWidth()
             )
             OutlinedTextField(
                 value = enjoymentTip,
@@ -133,9 +140,9 @@ fun TravelTipsScreen(uid: String, navController: NavHostController) {
                 label = { Text("Añadir consejo de disfrute") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 10.dp) // Separación horizontal
+                    .padding(horizontal = 10.dp) // Separacion horizontal
             )
-            Spacer(modifier = Modifier.height(16.dp)) // Espacio antes del botón
+            Spacer(modifier = Modifier.height(16.dp)) // Espacio antes del boton
 
             Button(
                 onClick = {
@@ -162,6 +169,7 @@ fun TravelTipsScreen(uid: String, navController: NavHostController) {
                         errorMessage = "Por favor, completa todos los campos antes de enviar."
                     }
                 },
+                colors = ButtonDefaults.buttonColors(containerColor  = Color(0xFF1976D2)),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp) // Separación horizontal

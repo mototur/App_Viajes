@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.navigation.NavHostController
 import com.example.sky.model.service.Servicio
 import com.example.sky.R
@@ -57,7 +58,7 @@ fun AddServiceScreen(uid: String, navController: NavHostController, onServiceAdd
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFFE3F2FD))
+                .background(Color(0xFFFFFFFF))
                 .padding(16.dp)
                 .padding(paddingValues),
             verticalArrangement = Arrangement.Center,
@@ -66,8 +67,8 @@ fun AddServiceScreen(uid: String, navController: NavHostController, onServiceAdd
             Text(
                 text = "Agregar Servicio",
                 fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF1976D2)
+                fontFamily = FontFamily.SansSerif,
+                color = Color(0xFF000000)
             )
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -136,6 +137,7 @@ fun AddServiceScreen(uid: String, navController: NavHostController, onServiceAdd
                 onClick = {
                     imagePickerLauncher.launch("image/*")
                 },
+                colors = ButtonDefaults.buttonColors(containerColor  = Color(0xFF1976D2)),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Seleccionar Imagen")
@@ -187,6 +189,7 @@ fun AddServiceScreen(uid: String, navController: NavHostController, onServiceAdd
                         errorMessage = "Por favor, completa todos los campos."
                     }
                 },
+                colors = ButtonDefaults.buttonColors(containerColor  = Color(0xFF1976D2)),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Agregar Servicio")

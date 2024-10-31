@@ -8,12 +8,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.KeyboardType
@@ -36,16 +38,16 @@ fun RegisterScreen(navController: NavHostController, userAuthService: UserAuthSe
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFE3F2FD))
+            .background(color = Color(0xFFFFFFFF))
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = "Registro de Usuario",
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF1976D2)
+            fontSize = 40.sp,
+            fontFamily = FontFamily.SansSerif,
+            color = Color(0xFF000000)
         )
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -118,21 +120,23 @@ fun RegisterScreen(navController: NavHostController, userAuthService: UserAuthSe
                     errorMessage = "Por favor, complete todos los campos"
                 }
             },
+            colors = ButtonDefaults.buttonColors(containerColor  = Color(0xFF1976D2)),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
         ) {
-            Text(text = "Registrarse", fontSize = 18.sp)
+            Text(text = "Registrarse", fontSize = 20.sp)
         }
 
-        Spacer(modifier = Modifier.padding(16.dp))
+        Spacer(modifier = Modifier.padding(8.dp))
         Button(
             onClick = { navController.popBackStack() },
+            colors = ButtonDefaults.buttonColors(containerColor  = Color(0xFF1976D2)),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
         ) {
-            Text(text = "Volver", fontSize = 18.sp)
+            Text(text = "Volver", fontSize = 20.sp)
         }
     }
 }

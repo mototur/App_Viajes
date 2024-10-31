@@ -115,15 +115,15 @@ fun HomeScreen(uid: String, navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(if (showServices) "Servicios Disponibles" else "Recomendaciones") },
-                colors = TopAppBarDefaults.topAppBarColors(Color(0xFF1976D2)),
+                title = { Text(if (showServices) "Servicios Disponibles" else "Recomendaciones", color = Color.White) },
+                colors = TopAppBarDefaults.topAppBarColors(Color(0xFF000080)),
                 actions = {
                     Row {
                         TextButton(onClick = { showServices = true }) {
-                            Text("Servicios", color = if (showServices) Color.White else Color.Gray)
+                            Text("Servicios", color = if (showServices) Color.White else Color.White,fontSize = 17.sp)
                         }
                         TextButton(onClick = { showServices = false }) {
-                            Text("Recomendaciones", color = if (!showServices) Color.White else Color.Gray)
+                            Text("Recomendaciones", color = if (!showServices) Color.White else Color.White,fontSize = 16.sp)
                         }
                     }
                 }
@@ -135,7 +135,7 @@ fun HomeScreen(uid: String, navController: NavHostController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .background(Color(0xFFE3F2FD))
+                .background(Color(0xFFFFFFFF))
         ) {
             if (loading) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
@@ -174,18 +174,18 @@ fun HomeScreen(uid: String, navController: NavHostController) {
 @Composable
 fun BottomNavigationBar(navController: NavHostController, uid: String, userName: String? = null) {
     BottomNavigation(
-        backgroundColor = Color(0xFF1976D2),
+        backgroundColor = Color(0xFF000080),
         contentColor = Color.White
     ) {
         BottomNavigationItem(
             icon = { Icon(Icons.Default.Person, contentDescription = "Perfil") },
-            label = { Text("Perfil") },
+            label = { Text("Perfil", color = Color.White) },
             selected = false,
             onClick = { navController.navigate("profile/$uid") }
         )
         BottomNavigationItem(
             icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-            label = { Text("Home") },
+            label = { Text("Home", color = Color.White) },
             selected = true,
             onClick = {
                 navController.navigate("home/$uid")
@@ -193,19 +193,20 @@ fun BottomNavigationBar(navController: NavHostController, uid: String, userName:
         )
         BottomNavigationItem(
             icon = { Icon(Icons.Default.Business, contentDescription = "Servicios") },
-            label = { Text("Servicios") },
+            label = { Text("Servicios",color = Color.White,fontSize = 13.sp) },
             selected = false,
             onClick = { navController.navigate("add_service/$uid") }
         )
         BottomNavigationItem(
             icon = { Icon(Icons.Default.Chat, contentDescription = "Chat") },
-            label = { Text("Chat") },
+            label = { Text("Chat", color = Color.White) },
             selected = false,
             onClick = { navController.navigate("chat/$uid") }
         )
+
         BottomNavigationItem(
             icon = { Icon(Icons.Default.Info, contentDescription = "Recomendaciones") },
-            label = { Text("Consejos") },
+            label = { Text("Consejos",color = Color.White,fontSize = 13.sp) },
             selected = false,
             onClick = { navController.navigate("travel_tips/$uid") }
         )
@@ -235,7 +236,7 @@ fun ServiceCard(servicio: Servicio) {
             Text(
                 text = servicio.tipo,
                 fontSize = 20.sp,
-                color = Color(0xFF1976D2)
+                color = Color(0xFF000080)
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(

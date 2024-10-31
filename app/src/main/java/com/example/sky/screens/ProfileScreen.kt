@@ -5,12 +5,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -54,7 +56,7 @@ fun ProfileScreen(navController: NavHostController, userAuthService: UserAuthSer
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFE3F2FD))
+            .background(Color(0xFFFFFFFF))
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -62,15 +64,15 @@ fun ProfileScreen(navController: NavHostController, userAuthService: UserAuthSer
         Text(
             text = "Perfil de Usuario",
             fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF1976D2)
+            fontFamily = FontFamily.SansSerif,
+            color = Color(0xFF000000)
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(50.dp))
 
         OutlinedTextField(
             value = nombre,
             onValueChange = { nombre = it },
-            label = { Text("Nombre Completo") },
+            label = { Text("Nombre Completo", color = Color.Black, fontSize = 16.sp) },
             modifier = Modifier.fillMaxWidth(),
             enabled = isEditing
         )
@@ -79,7 +81,7 @@ fun ProfileScreen(navController: NavHostController, userAuthService: UserAuthSer
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email") },
+            label = { Text("Email", color = Color.Black, fontSize = 16.sp) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             modifier = Modifier.fillMaxWidth(),
             readOnly = true,
@@ -90,7 +92,7 @@ fun ProfileScreen(navController: NavHostController, userAuthService: UserAuthSer
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Contraseña") },
+            label = { Text("Contraseña", color = Color.Black, fontSize = 16.sp) },
             modifier = Modifier.fillMaxWidth(),
             readOnly = true,
             enabled = isEditing
@@ -101,7 +103,7 @@ fun ProfileScreen(navController: NavHostController, userAuthService: UserAuthSer
         OutlinedTextField(
             value = intereses,
             onValueChange = { intereses = it },
-            label = { Text("Intereses (separados por comas)") },
+            label = { Text("Intereses (separados por comas)", color = Color.Black, fontSize = 16.sp) },
             modifier = Modifier.fillMaxWidth(),
             enabled = isEditing
         )
@@ -141,6 +143,7 @@ fun ProfileScreen(navController: NavHostController, userAuthService: UserAuthSer
                         errorMessage = "Por favor, complete todos los campos"
                     }
                 },
+                colors = ButtonDefaults.buttonColors(containerColor  = Color(0xFF1976D2)),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
@@ -150,6 +153,7 @@ fun ProfileScreen(navController: NavHostController, userAuthService: UserAuthSer
         } else {
             Button(
                 onClick = { isEditing = true },
+                colors = ButtonDefaults.buttonColors(containerColor  = Color(0xFF1976D2)),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
@@ -165,6 +169,7 @@ fun ProfileScreen(navController: NavHostController, userAuthService: UserAuthSer
                 userAuthService.logoutUser()
                 navController.navigate("login")
             },
+            colors = ButtonDefaults.buttonColors(containerColor  = Color(0xFF1976D2)),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
