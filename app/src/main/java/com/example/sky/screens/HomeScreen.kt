@@ -2,14 +2,8 @@ package com.example.sky.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -19,26 +13,12 @@ import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -100,9 +80,8 @@ fun HomeScreen(uid: String, navController: NavHostController) {
                     )
                     recommendations.add(recommendation)
                 }
-                // Actualizar userName al cargar las recomendaciones
                 if (recommendations.isNotEmpty()) {
-                    userName = recommendations[0].userName // Asigna el userName del primer elemento
+                    userName = recommendations[0].userName
                 }
                 loading = false
             }
@@ -120,23 +99,22 @@ fun HomeScreen(uid: String, navController: NavHostController) {
                 actions = {
                     Row {
                         TextButton(onClick = { showServices = true }) {
-                            Text("Servicios", color = if (showServices) Color.White else Color.White,fontSize = 17.sp)
+                            Text("Servicios", color = if (showServices) Color.White else Color.White, fontSize = 17.sp)
                         }
                         TextButton(onClick = { showServices = false }) {
-                            Text("Recomendaciones", color = if (!showServices) Color.White else Color.White,fontSize = 16.sp)
+                            Text("Recomendaciones", color = if (!showServices) Color.White else Color.White, fontSize = 16.sp)
                         }
                     }
                 }
             )
         },
-        bottomBar = { BottomNavigationBar(navController, uid, userName) } // Pasa el userName aquí
+        bottomBar = { BottomNavigationBar(navController, uid, userName) }
     ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .background(Color(0xFFFFFFFF))
-
         ) {
             if (loading) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
@@ -154,15 +132,13 @@ fun HomeScreen(uid: String, navController: NavHostController) {
                         }
                     }
                 } else {
-                    Column(modifier = Modifier.fillMaxSize()) {
-                        LazyColumn(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            items(recommendations.size) { index ->
-                                val recommendation = recommendations[index]
-                                RecommendationCard(recommendation)
-                            }
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(recommendations.size) { index ->
+                            val recommendation = recommendations[index]
+                            RecommendationCard(recommendation)
                         }
                     }
                 }
@@ -170,7 +146,6 @@ fun HomeScreen(uid: String, navController: NavHostController) {
         }
     }
 }
-
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController, uid: String, userName: String? = null) {
@@ -188,13 +163,11 @@ fun BottomNavigationBar(navController: NavHostController, uid: String, userName:
             icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
             label = { Text("Home", color = Color.White) },
             selected = true,
-            onClick = {
-                navController.navigate("home/$uid")
-            }
+            onClick = { navController.navigate("home/$uid") }
         )
         BottomNavigationItem(
             icon = { Icon(Icons.Default.Business, contentDescription = "Servicios") },
-            label = { Text("Servicios",color = Color.White,fontSize = 13.sp) },
+            label = { Text("Servicios", color = Color.White, fontSize = 13.sp) },
             selected = false,
             onClick = { navController.navigate("add_service/$uid") }
         )
@@ -204,10 +177,9 @@ fun BottomNavigationBar(navController: NavHostController, uid: String, userName:
             selected = false,
             onClick = { navController.navigate("chat/$uid") }
         )
-
         BottomNavigationItem(
             icon = { Icon(Icons.Default.Info, contentDescription = "Recomendaciones") },
-            label = { Text("Consejos",color = Color.White,fontSize = 13.sp) },
+            label = { Text("Consejos", color = Color.White, fontSize = 13.sp) },
             selected = false,
             onClick = { navController.navigate("travel_tips/$uid") }
         )
@@ -216,10 +188,13 @@ fun BottomNavigationBar(navController: NavHostController, uid: String, userName:
 
 @Composable
 fun ServiceCard(servicio: Servicio) {
+    var isDialogOpen by remember { mutableStateOf(false) }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(16.dp)
+            .clickable { isDialogOpen = true },
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(
@@ -233,7 +208,6 @@ fun ServiceCard(servicio: Servicio) {
                     .height(200.dp)
             )
             Spacer(modifier = Modifier.height(8.dp))
-
             Text(
                 text = servicio.tipo,
                 fontSize = 20.sp,
@@ -252,6 +226,37 @@ fun ServiceCard(servicio: Servicio) {
             )
         }
     }
+
+    if (isDialogOpen) {
+        ServiceDetailsDialog(servicio = servicio, onDismiss = { isDialogOpen = false })
+    }
+}
+
+@Composable
+fun ServiceDetailsDialog(servicio: Servicio, onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = { onDismiss() },
+        title = {
+            Text(text = "Detalles del Servicio", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        },
+        text = {
+            Column {
+                Text(text = "Tipo: ${servicio.tipo}", fontSize = 16.sp)
+                Text(text = "Descripción: ${servicio.descripcion}", fontSize = 16.sp)
+                Text(text = "Ubicación: ${servicio.ubicacion}", fontSize = 16.sp)
+                Text(text = "Fecha de Inicio: ${servicio.fechaInicio}", fontSize = 16.sp)
+                Text(text = "Fecha de Fin: ${servicio.fechaFin}", fontSize = 16.sp)
+                Text(text = "Costo: ${servicio.costo ?: "N/A"}", fontSize = 16.sp)
+                Text(text = "Gratuito: ${if (servicio.gratuito) "Sí" else "No"}", fontSize = 16.sp)
+                Text(text = "Estado: ${servicio.estado}", fontSize = 16.sp)
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { onDismiss() }) {
+                Text("Cerrar")
+            }
+        }
+    )
 }
 
 @Composable
@@ -265,11 +270,11 @@ fun RecommendationCard(recommendation: Recomendation) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = recommendation.userName, fontSize = 18.sp, color = Color(0xFF1976D2))
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Consejo económico: ${recommendation.economicTip}", fontSize = 14.sp, color = Color.Black)
+            Text(text = "Consejo Económico: ${recommendation.economicTip}")
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "Consejo de seguridad: ${recommendation.safetyTip}", fontSize = 14.sp, color = Color.Black)
+            Text(text = "Consejo de Seguridad: ${recommendation.safetyTip}")
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "Consejo para disfrutar: ${recommendation.enjoymentTip}", fontSize = 14.sp, color = Color.Black)
+            Text(text = "Consejo de Disfrute: ${recommendation.enjoymentTip}")
         }
     }
 }
