@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Business
 import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -61,7 +62,7 @@ fun ChatScreen(uid: String, navController: NavHostController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .background(Color(0xFFE3F2FD))
+                .background(Color(0xFFF1F1F1))
         ) {
             // Título de la pantalla
             Text(
@@ -70,7 +71,7 @@ fun ChatScreen(uid: String, navController: NavHostController) {
                 modifier = Modifier
                     .padding(16.dp)
                     .align(Alignment.Start),
-                color = Color(0xFF1976D2)
+                color = Color(0xFF000080)
             )
 
             // Lista de mensajes
@@ -114,7 +115,9 @@ fun ChatScreen(uid: String, navController: NavHostController) {
                         db.collection("chat").add(nuevoMensaje)
                         mensajeTexto = ""
                     }
-                }) {
+                },
+                    colors = ButtonDefaults.buttonColors(containerColor  = Color(0xFF1976D2)),
+                    ) {
                     Text("Enviar")
                 }
             }
@@ -147,18 +150,18 @@ fun MessageCard(mensaje: Mensaje) {
 @Composable
 fun ChatNavigationBar(navController: NavHostController, uid: String) {
     BottomNavigation(
-        backgroundColor = Color(0xFF1976D2),
+        backgroundColor = Color(0xFF000080),
         contentColor = Color.White
     ) {
         BottomNavigationItem(
             icon = { Icon(Icons.Default.Person, contentDescription = "Perfil") },
-            label = { Text("Perfil") },
+            label = { Text("Perfil", color = Color.White, fontSize = 13.sp) },
             selected = false,
             onClick = { navController.navigate("profile/$uid") }
         )
         BottomNavigationItem(
             icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-            label = { Text("Home") },
+            label = { Text("Home", color = Color.White, fontSize = 13.sp) },
             selected = false,
             onClick = {
                 navController.navigate("home/$uid")
@@ -166,15 +169,21 @@ fun ChatNavigationBar(navController: NavHostController, uid: String) {
         )
         BottomNavigationItem(
             icon = { Icon(Icons.Default.Business, contentDescription = "Servicios") },
-            label = { Text("Servicios") },
+            label = { Text("Servicios", color = Color.White, fontSize = 13.sp) },
             selected = false,
             onClick = { navController.navigate("add_service/$uid") }
         )
         BottomNavigationItem(
             icon = { Icon(Icons.Default.Chat, contentDescription = "Chat") },
-            label = { Text("Chat") },
+            label = { Text("Chat", color = Color.White, fontSize = 13.sp) },
             selected = true,
             onClick = { navController.navigate("chat/$uid") }
+        )
+        BottomNavigationItem(
+            icon = { Icon(Icons.Default.Info, contentDescription = "Recomendaciones") },
+            label = { Text("Consejos", color = Color.White, fontSize = 13.sp) },
+            selected = false,
+            onClick = { navController.navigate("travel_tips/$uid") }
         )
     }
 }
